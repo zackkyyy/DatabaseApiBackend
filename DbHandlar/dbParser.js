@@ -1,21 +1,34 @@
 const mongoose = require('mongoose')
 
-class mongoose {
-
-	constructor (){
-		this.uri = 'mongodb://<dbuser>:<dbpassword>@ds135068.mlab.com:35068/task25' 
-	}
-
-	connect(){
-		mongoose.connect(this.uri);
-		
-		var db = mongoose.connection
+class Mongoose {
+    constructor () {
+		//this.uri = 'mongodb://group1:hanaskog1@ds135068.mlab.com:35068/task25' 
+        this.uri = 'mongodb://localhost/RestaurantDb'
+      }
+    
+      connect(){
+        mongoose.connect(this.uri,{
+			useNewUrlParser:true,
+		})
+        let db = mongoose.connection
         db.on('connected', function () {
             console.log('Database connected')
-          })
-        db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+		  })
+		  
+		db.once('open' , ()=>{
+			console.log("success")
+		})  
 
-	}
+        process.on("SIGINT", function() {
+          db.close(function() {
+             console.log("Mongoose connection disconnected through app termination.")
+            process.exit(0);
+        })
+    })
 
+      }
 
 }
+
+module.exports = Mongoose;
+
