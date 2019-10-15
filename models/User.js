@@ -5,7 +5,7 @@ var crypto = require('crypto')
 var UserSchema = new mongoose.Schema({
   username: { type: String, required: [true, "can't be blank"], unique: true },
   email: { type: String, required: [true, "can't be blank"], unique: true },
-  role : {type : Number, required :[true, "cannot be blank"], }
+  role : {type : Number, required :[true, "cannot be blank"] },
   hash: String,
   salt: String
 }, { timestamps: true }) // timestamps is for automatically update of changes (createAt, updateAt)
