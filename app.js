@@ -9,6 +9,8 @@ const restaurantsRoute = require("./routes/restaurantsRoute")
 
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
 
 
 let mongoose = new Mongoose()
