@@ -1,7 +1,7 @@
 
 var express = require('express')
 var router = express.Router();
-let User = require('../models/Restuarants')
+let User = require('../models/Restaurant')
 
 router.route('/').get(function (req, res) {
     res.send('Restaurants')

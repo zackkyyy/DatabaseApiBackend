@@ -1,14 +1,17 @@
 
 let mongoose = require('mongoose')
 var crypto = require('crypto')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 var UserSchema = new mongoose.Schema({
   username: { type: String, required: [true, "can't be blank"], unique: true },
   email: { type: String, required: [true, "can't be blank"], unique: true },
   role : {type : Number, required :[true, "cannot be blank"] },
+  _id: Number, 
   hash: String,
   salt: String
-}, { timestamps: true }) // timestamps is for automatically update of changes (createAt, updateAt)
+}, { timestamps: true, _id :false }) // timestamps is for automatically update of changes (createAt, updateAt)
+UserSchema.plugin(AutoIncrement);
 
 UserSchema.methods.setPassword = function (password) {
   // creating a unique salt for a particular user

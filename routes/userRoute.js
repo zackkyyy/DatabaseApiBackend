@@ -33,4 +33,38 @@ router.route('/create').post(function (req, res) {
     }
   })
 
+
+
+
+    router.route('/:user_id').get(function(req,res ){
+     let id = req.params.user_id
+     console.log(req.params.user_id)
+     User.findById(id, function(err, user){
+        res.json(user)
+     })
+  })
+
+
+  router.route('/update').post(function(req, res){
+    console.log(req.body)
+    let id = req.body.user_id;
+    console.log(id)
+    User.findByIdAndUpdate(id , function(err , user){
+            user.username = req.body.newUsername
+            user.email =req.body.newEmail
+            user.setPassword (req.body.newPassword)
+            console.log('herer')
+            user.save((err) =>{
+                if(err){
+                    console.log(err);}
+                else{
+                    console.log('here')
+                    res.json(user)
+                } 
+            })
+    })
+  })
+
+
+  "{\n\t\"user_id\": 1,\n\t\"username\": \"newUsername\",\n\t\"email\": \"newEmail\",\n\t\"password\": \"newPassword\",\n\t\"role\": 2\n}"
 module.exports = router;
