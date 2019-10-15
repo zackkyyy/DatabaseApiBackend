@@ -12,6 +12,16 @@ router.route('/create').post(function (req, res) {
     restaurant.description=req.body.description;
     restaurant.tags=req.body.tags;
     restaurant.owner=req.body.owner;
+
+    restaurant.save((err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('added')
+          res.redirect('/')
+         
+        }
+      });
     console.log(restaurant);
 
     res.redirect("/restaurant");
