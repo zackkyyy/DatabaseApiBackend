@@ -8,12 +8,14 @@ class mongoose {
 
 	connect(){
 		mongoose.connect(this.uri);
-	}
-
-		let db = mongoose.connection
+		
+		var db = mongoose.connection
         db.on('connected', function () {
             console.log('Database connected')
           })
         db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
+	}
+
 
 }
