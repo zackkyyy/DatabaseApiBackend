@@ -86,7 +86,7 @@ router.route('/update').post(function (req, res) {
 
 //extra routes in case needed for front end implementation
 router.route('/getAll').get(function(req , res){
-    User.find(function(err , listOfUsers){
+    User.find({},{} , function(err , listOfUsers){
         res.json(listOfUsers)
     })
 })

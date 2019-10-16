@@ -33,7 +33,7 @@ router.route('/create').post(function (req, res) {
 router.route('/:restaurant_id').get(function (req, res) {
     let id2 = req.params.restaurant_id;
     console.log(req.params.restaurant_id)
-    Restaurant.findOne({id,id2}, function (err, restaurant) {
+    Restaurant.findOne({id:id2}, function (err, restaurant) {
         console.log(restaurant);
         res.json(restaurant)
     })
@@ -64,7 +64,7 @@ router.route("/update").post(function (req, res) {
 
 
 router.route('/getAll').get(function(req , res){
-    Restaurant.find(function(err, listOfRestaurants){
+    Restaurant.find({},function(err, listOfRestaurants){
         res.json(listOfRestaurants)
     })
 })
