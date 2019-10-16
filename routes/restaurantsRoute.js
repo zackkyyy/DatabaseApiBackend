@@ -63,4 +63,29 @@ router.route("/update").post(function (req, res) {
 })
 
 
+router.route('/getAll').get(function(req , res){
+    Restaurant.find(function(err, listOfRestaurants){
+        res.json(listOfRestaurants)
+    })
+})
+
+router.route('/name/:name').get(function(req , res){
+    Restaurant.findOne({name: req.params.name }, function(err, restaurant){
+        res.json(restaurant)
+    })
+})
+
+
+router.route('/category/:tag').get(function(req , res){
+    Restaurant.findOne({tags: req.params.tag }, function(err, restaurant){
+        res.json(restaurant)
+    })
+})
+
+router.route('/owner/:user_id').get(function(req ,res ){
+    Restaurant.find({owner: req.params.user_id}, function(err , listOfRestaurants){
+        res.json(listOfRestaurants)
+    })
+})
+
 module.exports = router;

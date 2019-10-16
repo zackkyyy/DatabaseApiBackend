@@ -10,20 +10,21 @@ router.route('/').get(function (req, res) {
 
 router.route('/create').post(function (req, res) {
     let user = new User()
-    user.username = req.body.username //
+    user.username = req.body.username 
     user.email = req.body.email
     user.role = req.body.role
     console.log(user)
     if (req.body.password.length < 6) {
-        console.log("invalid password")
+        console.log("Password should be at least 6 letters")
         res.redirect('/signUp')
     } else {
         user.setPassword(req.body.password)
         user.save((err) => {
             if (err) {
-                console.log(err)
+                console.log('Username or email is already exist')
+                  res.redirect('/create')
             } else {
-                res.redirect('/')
+                  res.redirect('/')
             }
         })
     }
@@ -64,6 +65,24 @@ router.route('/update').post(function (req, res) {
     })
 })
 
+//extra routes in case needed for front end implementation
+router.route('/getAll').get(function(req , res){
+    User.find(function(err , listOfUsers){
+        res.json(listOfUsers)
+    })
+})
+
+router.route('/name/:name').get(function(req, rs){
+    User.findOne({username : req.params.name}, function(req ,user){
+        res.json(user)
+    })
+})
+
+router.route('/email/:email').get(function(req,res){
+    User.findOne({email:req.params.email} , function(err , user){
+        res.json(user)
+    })
+})
 // get latest added users 
 // ******************************
 
