@@ -28,7 +28,39 @@ router.route('/create').post(function (req, res) {
         }
       });
     console.log(restaurant);
-  })
+})
+
+router.route('/:restaurant_id').get(function (req, res) {
+    let id2 = req.params.restaurant_id;
+    console.log(req.params.restaurant_id)
+    Restaurant.findOne({id,id2}, function (err, restaurant) {
+        console.log(restaurant);
+        res.json(restaurant)
+    })
+})
+
+router.route("/update").post(function (req, res) {
+    console.log(req.body)
+    let id = req.body.restaurant_id;
+    console.log(id)
+    Restaurant.findOne({id,id}, function (err, restaurant) {
+        console.log("found a restaurant");
+        restaurant.name=req.body.name;
+        restaurant.description=req.body.description;
+        restaurant.category=(req.body.category).replace(/\s/g, '').split(",");
+        restaurant.owner=req.body.user_id;
+        console.log('herer')
+        restaurant.save((err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log('Updated Restaurant')
+                res.json(restaurant)
+            }
+        })
+    })
+})
 
 
 module.exports = router;
