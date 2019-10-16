@@ -5,6 +5,8 @@ const morgan = require('morgan')
 const app = express()
 const Mongoose =require('./dbHandlar/dbParser.js')
 const userRoute = require("./routes/userRoute")
+const reviewRoute = require("./routes/reviewRoute")
+
 const restaurantsRoute = require("./routes/restaurantsRoute")
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -19,6 +21,7 @@ mongoose.connect()
 
 
 app.use('/user',userRoute)
+app.use('/review',reviewRoute)
 app.use("/restaurant",restaurantsRoute)
 
 app.listen(process.env.PORT || 8080)

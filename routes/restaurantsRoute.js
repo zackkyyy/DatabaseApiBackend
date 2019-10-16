@@ -24,8 +24,6 @@ router.route('/create').post(function (req, res) {
         }
       });
     console.log(restaurant);
-
-    res.redirect("/restaurant");
   })
 
 

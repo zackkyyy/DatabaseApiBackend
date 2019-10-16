@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 class Mongoose {
     constructor () {
-		//this.uri = 'mongodb://group1:hanaskog1@ds135068.mlab.com:35068/task25' 
         this.uri = 'mongodb://localhost/RestaurantDb'
       }
     
