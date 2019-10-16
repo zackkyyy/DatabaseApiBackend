@@ -4,7 +4,9 @@ let reviewSchema = new mongoose.Schema({
    userID: { type: Number, ref: 'users', required: true },
    restaurantID: { type: Number, ref: 'restaurants', required: true },
    rating: { type: mongoose.Types.Decimal128, required: true },
-   text : { type: String, required: true }
+   text : { type: String, required: true },
+   restaurantName:{type:String},
+   reviewer : {type : String}
 },{timestamps:true})
 let Review = mongoose.model('reviews', reviewSchema)
 module.exports = Review

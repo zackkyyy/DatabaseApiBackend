@@ -3,6 +3,14 @@ var express = require('express')
 var router = express.Router();
 
 let Restaurant = require('../models/Restaurant')
+let User = require('../models/User')
+
+
+function getOwnerName(id){
+    User.findById(id, function(err , user){
+        return user.username
+    })
+}
 
 router.route('/create').post(function (req, res) {
     //res.send('Restaurants')
@@ -12,6 +20,7 @@ router.route('/create').post(function (req, res) {
     restaurant.address=req.body.address;
     restaurant.description=req.body.description;
     restaurant.owner=req.body.user_id;
+    restaurant.ownerName = getOwnerName(req.body.user_id)
     
     var category =req.body.category;
     categories = category.replace(/\s/g, '');

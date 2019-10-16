@@ -2,6 +2,7 @@
 var express = require('express')
 var router = express.Router();
 let User = require('../models/User')
+let Review = require('../models/Review')
 
 router.route('/').get(function (req, res) {
     res.send('user route')
@@ -30,17 +31,18 @@ router.route('/create').post(function (req, res) {
     }
 })
 
-router.route('/id/:user_id').get(function (req, res) {
-    let id = req.params.user_id
-    User.findById(id, function (err, user) {
-        console.log('here')
+function findUserByID(id){
+    User.findById(id, function(err,user){
         if(err){
             console.log(err)
         }else{
-            res.json(user)
-
+            return user;
         }
     })
+}
+
+router.route('/id/:user_id').get(function (req, res) {
+    res.json(findUserByID(req.params.user_id))
 })
 
 router.route('logIn').post(function(req,res){
@@ -103,6 +105,20 @@ router.route('/email/:email').get(function(req,res){
         res.json(user)
     })
 })
+
+
+function getAllUserReview(id){
+    Review.find({user_id : id }, function(req,listOfReviews){
+        return listOfReviews
+    })
+}
+router.route('/reviews/:id').get(function(req, res){
+   res.json(getAllUserReview(id))
+})
+
+
+
+
 // get latest added users 
 // ******************************
 
