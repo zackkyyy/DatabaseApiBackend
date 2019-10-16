@@ -47,7 +47,7 @@ router.route("/update").post(function (req, res) {
         console.log("found a restaurant");
         restaurant.name=req.body.name;
         restaurant.description=req.body.description;
-        restaurant.category=(req.body.category).replace(/\s/g, '').split(",");
+        restaurant.tags=(req.body.category).replace(/\s/g, '').split(",");
         restaurant.owner=req.body.user_id;
         console.log('herer')
         restaurant.save((err) => {
