@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router();
 let Review = require('../models/Review')
+let User = require('../models/User')
 let Restaurant = require('../models/Restaurant')
 
 router.route('/').get(function (req, res) {
@@ -8,12 +9,25 @@ router.route('/').get(function (req, res) {
 })
 
 
+function getReviewerName(id){
+User.findById(id , function (err, user){
+    return user.username
+})
+}
+function getRestaurantName(id){
+    Restaurant.findById(id , function (err, restaurant){
+        return restaurant.name
+    })
+    }
+
 router.route('/create').post(function(req,res){
     let review = new Review()
     review.userID = req.body.user_id 
     review.restaurantID = req.body.restaurant_id
     review.rating = req.body.rating
     review.text = req.body.reviewText
+    review.reviewer = getReviewerName(req.body.user_id)
+    review.restaurantName = getRestaurantName(req.body.restaurant_id)
 
     review.save((err)=>{
         if (err) {

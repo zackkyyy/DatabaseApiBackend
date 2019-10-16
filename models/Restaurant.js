@@ -7,7 +7,8 @@ let restaurantSchema = new mongoose.Schema({
     address: { type: String, required: true },
     description: { type: String, required: true },
     tags : { type: Array, required: true },
-    owner : { type: Number, ref: 'users' }
+    owner : { type: Number, ref: 'users' },
+    ownerName:{type : String}
  },{timestamps:true});
 
  restaurantSchema.plugin(AutoIncrement, {inc_field: 'id'});
