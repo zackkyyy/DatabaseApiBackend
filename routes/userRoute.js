@@ -31,9 +31,14 @@ router.route('/create').post(function (req, res) {
 
 router.route('/:user_id').get(function (req, res) {
     let id = req.params.user_id
-    console.log(req.params.user_id)
     User.findById(id, function (err, user) {
-        res.json(user)
+        console.log('here')
+        if(err){
+            console.log(err)
+        }else{
+            res.json(user)
+
+        }
     })
 })
 

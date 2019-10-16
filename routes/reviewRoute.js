@@ -28,10 +28,11 @@ router.route('/latest').get(function(req,res){
     Review.find({},{}, {sort :{
         'createdAt' : -1
     }} ,function(err , response){
+        res.json(response)
     }).limit(5)
+    console.log("here")
 })
 
-//review/restaurant/:restaurant_id
 
 router.route('/review/restaurant/:restaurant_id').get(function(req,res){
     let id = req.params.restaurant_id
