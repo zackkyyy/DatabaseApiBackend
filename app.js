@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const morgan = require('morgan')
 const app = express()
-const Mongoose =require('./DbHandlar/dbParser')
+const Mongoose =require( './DbHandlar/dbParser')
 const userRoute = require("./routes/userRoute")
 const reviewRoute = require("./routes/reviewRoute")
 const dotenv = require('dotenv');
@@ -35,6 +35,21 @@ app.use(session({
   
 }))
 
+// flash messages for session
+app.use(function (req, res, next) {
+    if (req.session.flash) {
+      res.locals.flash = req.session.flash
+       delete req.session.flash
+    }
+    if (req.session.loggedin) {
+      res.locals.loggedin = req.session.loggedin  
+    }
+    next()
+  })
+  app.use(function (req, res, next) {
+    res.locals.session = req.session
+    next()
+    })
 
 app.get('/' , function( req , res){
     res.send("Main page")
