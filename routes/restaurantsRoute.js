@@ -73,7 +73,7 @@ router.route('/name/:name').get(function(req , res){
 })
 
 router.route('/getAll').get(function(req , res){
-    Restaurant.findOne({ }, function(err, restaurant){
+    Restaurant.find({ }, function(err, restaurant){
         res.json(restaurant)
     })
 })
