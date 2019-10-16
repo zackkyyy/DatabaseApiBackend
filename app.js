@@ -18,7 +18,12 @@ app.use(express.urlencoded()); // to support URL-encoded bodies
 
 
 let mongoose = new Mongoose()
-mongoose.connect(""+process.env.URI)
+mongoose.connect()
+
+app.get('/' , function(res , req){
+
+res.send("Main page")
+})
 
 app.use('/user',userRoute)
 app.use('/review',reviewRoute)
