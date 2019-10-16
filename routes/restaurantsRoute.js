@@ -30,8 +30,9 @@ router.route('/create').post(function (req, res) {
     console.log(restaurant);
 })
 
-router.route('/:restaurant_id').get(function (req, res) {
+router.route('/id/:restaurant_id').get(function (req, res) {
     let id2 = req.params.restaurant_id;
+    console.log(req.params.restaurant_id)
     console.log(req.params.restaurant_id)
     Restaurant.findOne({id:id2}, function (err, restaurant) {
         console.log(restaurant);
@@ -63,19 +64,16 @@ router.route("/update").post(function (req, res) {
 })
 
 
-router.route('/getAll').get(function(req , res){
 
-    Restaurant.find({},{}, {sort :{
-        'name' : -1
-    }} ,function(err , response){
-        res.json(response)
-    })
-    console.log("here")
-
-})
 
 router.route('/name/:name').get(function(req , res){
-    Restaurant.findOne({name: req.params.name }, function(err, restaurant){
+    Restaurant.findOne({name: req.params.name}, function(err, restaurant){
+        res.json(restaurant)
+    })
+})
+
+router.route('/getAll').get(function(req , res){
+    Restaurant.findOne({ }, function(err, restaurant){
         res.json(restaurant)
     })
 })
