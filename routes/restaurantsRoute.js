@@ -64,9 +64,14 @@ router.route("/update").post(function (req, res) {
 
 
 router.route('/getAll').get(function(req , res){
-    Restaurant.find({},function(err, listOfRestaurants){
-        res.json(listOfRestaurants)
+
+    Restaurant.find({},{}, {sort :{
+        'name' : -1
+    }} ,function(err , response){
+        res.json(response)
     })
+    console.log("here")
+
 })
 
 router.route('/name/:name').get(function(req , res){
