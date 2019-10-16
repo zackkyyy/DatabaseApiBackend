@@ -11,8 +11,12 @@ router.route('/create').post(function (req, res) {
     restaurant.name=req.body.name;
     restaurant.address=req.body.address;
     restaurant.description=req.body.description;
-    restaurant.tags=req.body.tags;
-    restaurant.owner=req.body.owner;
+    restaurant.owner=req.body.user_id;
+    
+    var category =req.body.category;
+    categories = category.replace(/\s/g, '');
+    restaurant.tags = categories.split(',');
+
 
     restaurant.save((err) => {
         if (err) {

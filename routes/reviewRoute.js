@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router();
 let Review = require('../models/Review')
+let Restaurant = require('../models/Restaurant')
 
 router.route('/').get(function (req, res) {
     res.send('review router')
@@ -30,8 +31,14 @@ router.route('/latest').get(function(req,res){
     }).limit(5)
 })
 
+//review/restaurant/:restaurant_id
 
-
+router.route('/review/restaurant/:restaurant_id').get(function(req,res){
+    let id = req.params.restaurant_id
+    Review.find({restaurantID: id},function(err, list){
+        res.json(list)
+    })
+})
   
 
 router.route('/update').post(function (req, res) {
