@@ -43,6 +43,25 @@ router.route('/:user_id').get(function (req, res) {
     })
 })
 
+router.route('logIn').post(function(req,res){
+    let username = req.body.username
+    let password = req.body.password
+
+    User.findOne({username: username}, function(err , user){
+        if(err){
+            console.log('user is not exist')
+        }
+        else{
+            if(!user.validPassword(password)){
+                console.log("Wrong password")
+            }else{
+                req.session.user = username
+                req.session.loggedin = true
+                res.send("logged in by " + username )
+            }
+        }
+    })
+})
 
 router.route('/update').post(function (req, res) {
     console.log(req.body)
@@ -72,8 +91,9 @@ router.route('/getAll').get(function(req , res){
     })
 })
 
-router.route('/name/:name').get(function(req, rs){
-    User.findOne({username : req.params.name}, function(req ,user){
+router.route('/name/:name').get(function(req, res){
+    User.findOne({username : req.params.name}, function(err ,user){
+        console.log(req.params)
         res.json(user)
     })
 })
