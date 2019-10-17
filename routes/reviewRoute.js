@@ -8,7 +8,13 @@ router.route('/').get(function (req, res) {
     res.send('review router')
 })
 
-
+function getname(id){
+    var restaurantName;
+ Restaurant.findOne({id : req.body.restaurant_id} , function (err, restaurant){
+    restaurantName = restaurant.name
+    })
+    return restaurantName;
+}
 router.route('/create').post(function(req,res){
     let review = new Review()
     review.userID = req.body.user_id 
@@ -16,13 +22,13 @@ router.route('/create').post(function(req,res){
     review.rating = req.body.rating
     review.text = req.body.reviewText
 
-    Restaurant.findOne({id : req.body.restaurant_id} , function (err, restaurant){
-    review.restaurantName = restaurant.name
-    })
+    review.restaurantName = getname(req.body.restaurant_id)
+    
 
     User.findById(req.body.user_id , function (err, user){
-        review.reviewe= user.username
+     review.reviewe= user.username
     })
+    console.log(review)
 
     review.save((err)=>{
         if (err) {
