@@ -8,6 +8,12 @@ router.route('/').get(function (req, res) {
     res.send('user route')
 })
 
+router.route('/deleteAll').get(function(req , res){
+    User.deleteMany().then(
+        res.send('deleted')
+    )
+})
+
 
 router.route('/create').post(function (req, res) {
     let user = new User()
@@ -49,6 +55,7 @@ router.route('/logIn').post(function(req,res){
             console.log('user is not exist')
         }
         else{
+
             if(!user.validPassword(password)){
                 console.log("Wrong password")
             }else{

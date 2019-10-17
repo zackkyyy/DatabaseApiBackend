@@ -5,7 +5,6 @@ var router = express.Router();
 let Restaurant = require('../models/Restaurant')
 let User = require('../models/User')
 
-
 function getOwnerName(id){
     var name ="";
     User.findById(id, (err , user)=>{
@@ -14,8 +13,10 @@ function getOwnerName(id){
     })
 }
 
-router.route('/hey').get(function(req,res){
-    console.log(getOwnerName(1))
+router.route('/deleteAll').get(function(req , res){
+    Restaurant.deleteMany().then(
+        res.send('deleted')
+    )
 })
 
 router.route('/create').post(function (req, res) {
@@ -30,7 +31,11 @@ router.route('/create').post(function (req, res) {
 
 
     User.findById(req.body.user_id, (err , user)=>{
-        restaurant.ownerName =  user.username
+        if(err ||!user){
+            console.log('this user id is not exist')
+        }else {
+            restaurant.ownerName =  user.username
+        }
      }).then(
         restaurant.save((err) => {
             if (err) {
@@ -77,8 +82,6 @@ router.route("/update").post(function (req, res) {
         })
     })
 })
-
-
 
 
 router.route('/name/:name').get(function(req , res){
