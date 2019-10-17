@@ -21,23 +21,26 @@ router.route('/create').post(function(req,res){
     review.restaurantID = req.body.restaurant_id
     review.rating = req.body.rating
     review.text = req.body.reviewText
-
-    review.restaurantName = getname(req.body.restaurant_id)
     
-
     User.findById(req.body.user_id , function (err, user){
-     review.reviewe= user.username
-    })
-    console.log(review)
+    console.log(user.username)
+     review.reviewer= user.username
+    }).then(
+    Restaurant.findOne({id : req.body.restaurant_id} , function (err, restaurant){
+        console.log(restaurant.name)
+     review.restaurantName = restaurant.name
+        })
+    ).then(
+        review.save((err)=>{
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("review added succesfully")
+                res.send(review)
+            }
+        })
+    )
 
-    review.save((err)=>{
-        if (err) {
-            console.log(err)
-        } else {
-            console.log("review added succesfully")
-            res.send("review added succesfully")
-        }
-    })
 })
 router.route('/latest').get(function(req,res){
     Review.find({},{}, {sort :{

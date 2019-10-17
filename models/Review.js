@@ -8,5 +8,7 @@ let reviewSchema = new mongoose.Schema({
    restaurantName:{type:String},
    reviewer : {type : String}
 },{timestamps:true})
+
+
 let Review = mongoose.model('reviews', reviewSchema)
 module.exports = Review

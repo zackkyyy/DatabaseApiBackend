@@ -7,39 +7,42 @@ let User = require('../models/User')
 
 
 function getOwnerName(id){
-    User.findById(id, function(err , user){
-        return user.username
+    var name ="";
+    User.findById(id, (err , user)=>{
+       name =  user.username
+       return name
     })
 }
 
+router.route('/hey').get(function(req,res){
+    console.log(getOwnerName(1))
+})
+
 router.route('/create').post(function (req, res) {
-    //res.send('Restaurants')
-    //console.log(req);
+
     let restaurant = new Restaurant();
     restaurant.name=req.body.name;
     restaurant.address=req.body.address;
     restaurant.description=req.body.description;
-    restaurant.owner=req.body.user_id;
-
-    User.findById(req.body.user_id, function(err , user){
-        restaurant.ownerName = user.username
-    })
-    
     var category =req.body.category;
     categories = category.replace(/\s/g, '');
     restaurant.tags = categories.split(',');
 
 
-    restaurant.save((err) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('added')
-          res.redirect('/')
-         
-        }
-      });
-    console.log(restaurant);
+    User.findById(req.body.user_id, (err , user)=>{
+        restaurant.ownerName =  user.username
+     }).then(
+        restaurant.save((err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('added')
+              res.send(restaurant)
+             
+            }
+          })
+     )
+
 })
 
 router.route('/id/:restaurant_id').get(function (req, res) {
