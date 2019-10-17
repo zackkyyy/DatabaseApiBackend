@@ -34,13 +34,9 @@ router.route('/create').post(function (req, res) {
 
 
 router.route('/id/:user_id').get(function (req, res) {
-    User.findById(req.body.user_id, function(err,userFound){
-        if(err){
-        console.log(err)
-        }
-        console.log('found')
-        res.json(userFound)
-    })
+    User.findOne({id:req.body.user_id}, function (err, user) {
+        res.json(user)
+  })
  
 })
 
