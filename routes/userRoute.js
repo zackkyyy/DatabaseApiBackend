@@ -31,18 +31,17 @@ router.route('/create').post(function (req, res) {
     }
 })
 
-function findUserByID(id){
-    User.findById(id, function(err,user){
-        if(err){
-            console.log(err)
-        }else{
-            return user;
-        }
-    })
-}
+
 
 router.route('/id/:user_id').get(function (req, res) {
-    res.json(findUserByID(req.params.user_id))
+    User.findById(req.body.user_id, function(err,userFound){
+        if(err){
+        console.log(err)
+        }
+        console.log('found')
+        res.json(userFound)
+    })
+ 
 })
 
 router.route('logIn').post(function(req,res){
